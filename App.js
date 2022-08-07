@@ -10,14 +10,23 @@ import {
 } from 'react-native';
 
 export default function App() {
-  const [todos, setTodos] = useState([
-  { name: 'Clean room', key: 1 },
-  { name: 'Trash garbage', key: 2 },
-  { name: 'Go shopping', key: 3 },
-]);
+  const [text, setText] = useState("")
+  const [todos, setTodos] = useState([]);
 
   const onPressItemDelete = (key) => {
     const newTodos = todos.filter((item) => item.key !== key)
+    setTodos(newTodos)
+  }
+
+  const onChangeText = (value) => {
+    setText(value)
+  }
+
+  const onPressButton = () => {
+    const newTodos = [...todos, {
+      name: text, key: Math.random().toString(),
+    }]
+    setText("")
     setTodos(newTodos)
   }
 
@@ -38,6 +47,16 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text style={ styles.title }>TODO</Text>
+      <TextInput
+        value={text}
+        onChangeText={onChangeText}
+        style={styles.textInput}
+      />
+      <Button
+        title="submit"
+        color="blue"
+        onPress={onPressButton}
+      />
       <FlatList
         data={todos}
         renderItem={renderItem}
@@ -56,6 +75,15 @@ const styles = StyleSheet.create({
     fontSize: 40,
     fontWeight: "bold",
     marginTop: 80,
+    marginBottom: 20,
+  },
+  textInput: {
+    height: 40,
+    width: 300,
+    padding: 10,
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginBottom: 20,
   },
   item: {
     width: 300,
@@ -75,5 +103,5 @@ const styles = StyleSheet.create({
   deleteText: {
     color: 'white',
     textAlign: 'center',
-  }
+  },
 });
