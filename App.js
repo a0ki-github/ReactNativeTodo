@@ -1,11 +1,34 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  TextInput,
+  Button,
+  FlatList,
+} from 'react-native';
+
+const todos = [
+  { name: 'clean room', key: 1 },
+  { name: 'trash garbage', key: 2 },
+  { name: 'go shopping', key: 3 },
+];
 
 export default function App() {
+  const renderItem = ({item}) => {
+    return (
+      <Text>{ item.name }</Text>
+    )
+  }
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <Text style={ styles.title }>TODO</Text>
+      <FlatList
+        data={todos}
+        renderItem={renderItem}
+      />
     </View>
   );
 }
@@ -15,6 +38,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
   },
+  title: {
+    fontSize: 40,
+    fontWeight: "bold",
+    marginTop: 80,
+  }
 });
