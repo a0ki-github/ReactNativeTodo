@@ -9,18 +9,28 @@ import {
   FlatList,
 } from 'react-native';
 
-const todos = [
+export default function App() {
+  const [todos, setTodos] = useState([
   { name: 'Clean room', key: 1 },
   { name: 'Trash garbage', key: 2 },
   { name: 'Go shopping', key: 3 },
-];
+]);
 
-export default function App() {
+  const onPressItemDelete = (key) => {
+    const newTodos = todos.filter((item) => item.key !== key)
+    setTodos(newTodos)
+  }
+
   const renderItem = ({item}) => {
     return (
       <View style={ styles.item }>
         <Text style={ styles.itemName }>{ item.name }</Text>
-        <Text>Delete</Text>
+        <TouchableOpacity
+          onPress={() => onPressItemDelete(item.key)}
+          style={ styles.deleteView }
+        >
+          <Text style={ styles.deleteText } >Delete</Text>
+        </TouchableOpacity>
       </View>
     )
   }
@@ -57,5 +67,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 8,
+  },
+  deleteView: {
+    width: 50,
+    backgroundColor: 'gray',
+  },
+  deleteText: {
+    color: 'white',
+    textAlign: 'center',
   }
 });
